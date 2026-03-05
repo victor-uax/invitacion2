@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡INVITACIÓN ESPECIAL!</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Arial Black', sans-serif;
+            background-color: #000;
+        }
+
+        /* Pantalla 1 */
+        #pantalla1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: radial-gradient(circle, #ff00ff, #00ffff);
+            animation: gradientBg 2s infinite alternate;
+        }
+
+        @keyframes gradientBg {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .boton-victor {
+            padding: 30px 60px;
+            font-size: 2rem;
+            cursor: pointer;
+            background: #fff;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.8);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .boton-victor:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px #fff;
+        }
+
+        /* Pantalla 2 */
+        #pantalla2 {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            background-color: #ff0055;
+            animation: flash 0.1s infinite;
+        }
+
+        @keyframes flash {
+            0% { background-color: #ff0055; }
+            50% { background-color: #00ff00; }
+            100% { background-color: #00ccff; }
+        }
+
+        .mensaje-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border: 10px solid #000;
+            transform: rotate(-3deg);
+            box-shadow: 20px 20px 0px #000;
+            max-width: 80%;
+            animation: bounce 0.5s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: rotate(-3deg) scale(1); }
+            to { transform: rotate(3deg) scale(1.05); }
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 20px; color: #000; }
+        h2 { font-size: 1.8rem; color: #ff0055; text-shadow: 2px 2px #000; }
+
+        .emoji { font-size: 4rem; }
+        
+        /* Contenedor del video oculto */
+        #youtube-player {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="pantalla1">
+        <button class="boton-victor" onclick="entrarALaFiesta()">Víctor te quiere decir algo</button>
+    </div>
+
+    <div id="pantalla2">
+        <div class="mensaje-box">
+            <h1>SI HAS RECIBIDO ESTO HAS SIDO INVITADO A MI CUMPLEAÑOS</h1>
+            <p style="font-size: 1.2rem; color: red; font-weight: bold;">(no vale venir con calcetines)</p>
+            <div class="emoji">🎂🕺🔥</div>
+            <h2>Viernes 13 de marzo</h2>
+            <p>Lugar: Mi urbanización</p>
+        </div>
+        
+        <div id="youtube-player"></div>
+    </div>
+
+    <script>
+        // 1. Cargamos el API de YouTube de forma asíncrona
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: 'c8OiFircF4c', // ID del video que pediste
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // El reproductor está listo, pero no iniciamos hasta el clic
+        }
+
+        function entrarALaFiesta() {
+            // 2. Cambiamos de pantalla
+            document.getElementById('pantalla1').style.display = 'none';
+            document.getElementById('pantalla2').style.display = 'flex';
+
+            // 3. Reproducimos el audio
+            if (player && player.playVideo) {
+                player.playVideo();
+            }
+        }
+    </script>
+</body>
+</html>
